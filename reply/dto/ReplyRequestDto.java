@@ -13,7 +13,8 @@ import lombok.*;
 public class ReplyRequestDto { // 이승창
     private Long replyId;
     private String content;
-    private String writer;
+    private Member member;
+    private Board board;
 //    private Member member; // 현재 로그인이 되어 있는 상태라 작성자를 어떻게 끌어오지
 //    private Board board;
 }

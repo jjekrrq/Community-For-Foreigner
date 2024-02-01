@@ -3,6 +3,7 @@ package com.example.project.board.domain;
 import com.example.project.board.dto.BoardRequestDto;
 import com.example.project.member.domain.Member;
 import com.example.project.reply.domain.Reply;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -43,26 +44,11 @@ public class Board {
     // 게시글 댓글. 양방향 연관 관계.
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.REMOVE)
     @Column(name = "BOARD_REPLY")
-    @JsonIgnoreProperties({"board"})
+    @JsonIgnore
     @OrderBy("replyId desc ") // 댓글 작성시 최근 순으로
     private List<Reply> replies = new ArrayList<>();
 
-    // ?? 뭔지 모름. 추측상 '좋아요'
-    // private int heart;
-    // 조회수(?)
-    // private int count;
 
-
-
-//    @Builder
-//    private Board(Long boardId, String author, String title, String contents, int heart, int count){
-//        this.boardId = boardId;
-//        this.author = author;
-//        this.title = title;
-//        this.contents =contents;
-//        this.heart = heart;
-//        this.count = count;
-//    }
 
     public void update(BoardRequestDto boardRequestDto) {
         if(boardRequestDto.getTitle() == null){
@@ -72,6 +58,10 @@ public class Board {
         if(boardRequestDto.getContents() == null){
             this.title = boardRequestDto.getTitle();
             this.contents = contents;
+        }
+        if((boardRequestDto.getContents() != null) && (boardRequestDto.getTitle() != null)){
+            this.title = boardRequestDto.getTitle();
+            this.contents = boardRequestDto.getContents();
         }
     }
     public void setMember(Member member){

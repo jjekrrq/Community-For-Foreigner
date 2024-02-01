@@ -3,7 +3,11 @@ package com.example.project.board.dto;
 
 import com.example.project.board.domain.Board;
 import com.example.project.member.domain.Member;
+import com.example.project.reply.domain.Reply;
+import com.example.project.reply.dto.ReplyResponseDto;
 import lombok.*;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -15,6 +19,7 @@ public class BoardResponseDto { // 게시글을 클릭했을 때, 댓글들도 �
     private String title;
     private String contents;
     private String writer;
+    private List<ReplyResponseDto> replies;
 
 
 
@@ -25,6 +30,7 @@ public class BoardResponseDto { // 게시글을 클릭했을 때, 댓글들도 �
                 .boardId(board.getBoardId())
                 .title(board.getTitle())
                 .contents(board.getContents())
+                .writer(board.getWriter())
                 .build();
     }
 

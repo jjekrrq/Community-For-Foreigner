@@ -56,6 +56,11 @@ public class BoardController {
     public ResponseEntity<List<BoardResponseDto>> getBoardsThroughBoardWriter(@PathVariable("boardwriter") String boardWriter){
         return new ResponseEntity<>(boardService.getBoardsThroughWriter(boardWriter), HttpStatus.OK);
     }
+    // READ : 상세 게시물 / 댓글도
+    @GetMapping("/details/{boardId}")
+    public ResponseEntity<BoardResponseDto> getBoardThroughBoardId(@PathVariable("boardId") Long boardId){
+        return new ResponseEntity<>(boardService.getBoardThroughBoardId(boardId),HttpStatus.OK);
+    }
     // UPDATE : 게시판 ID를 가지고 그에 해당하는 게시글 수정하기. / 구현 완료.
     @PatchMapping("/update/{boardId}") // 자원을 전체 교체하는 PutMapping보다 PatchMappin이 더 좋을 것 같다.
     public ResponseEntity<BoardResponseDto> updateBoard(@PathVariable("boardId") Long boardId,
@@ -69,6 +74,4 @@ public class BoardController {
         boardService.deleteBoard(boardId);
         return new ResponseEntity<>("게시글 삭제", HttpStatus.OK);
     }
-
 }
-

@@ -12,8 +12,8 @@ public class BoardRequestDto {
     private Long boardId;
     private String contents;
     private String title;
-    // 현재 로그인이 되어있는 상태이기 때문에 작성자의 정보는 필요없을 것 같음.
-    private Member member;
+    // 현재 로그인이 되어있는 상태이기 때문에 작성자의 정보는 필요없을 것 같음. / 없애야 할 것 같음.
+//    private Member member; // 이새기 없애
 //    private int heart;x
 //    private int count;
 
@@ -25,5 +25,4 @@ public class BoardRequestDto {
 //        this.heart = heart;
 //        this.count = count;
     }
-
 }
