@@ -20,6 +20,7 @@ public class BoardResponseDto { // 게시글을 클릭했을 때, 댓글들도 �
     private String contents;
     private String writer;
     private List<ReplyResponseDto> replies;
+    private Long theNumberOfReply;
 
 
 

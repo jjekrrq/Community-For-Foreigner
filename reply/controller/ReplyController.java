@@ -42,9 +42,11 @@ public class ReplyController {
 
         String email = member.getEmail();
         replyService.writeReply(replyRequestDto, boardId, email);
+
         // 게시글 상세 페이지
-//        return "redirect:/board/" + boardId;
-        return new ResponseEntity<>("댓글 작성", HttpStatus.OK);
+//        return "redirect:/board/details/" + boardId;
+//        return new ResponseEntity<>("댓글 작성", HttpStatus.OK);
+        return ResponseEntity.ok("redirect:/board/details/" + boardId);
     }
     // READ : 게시글의 전체 댓글 불러오기 / 구현 완료
     @Operation(summary = "댓글 조회", description = "게시글에 달려있는 댓글 조회")

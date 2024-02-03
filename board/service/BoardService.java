@@ -8,6 +8,7 @@ import com.example.project.member.domain.Member;
 import com.example.project.member.repository.MemberRepository;
 import com.example.project.reply.domain.Reply;
 import com.example.project.reply.dto.ReplyResponseDto;
+import com.example.project.reply.repository.ReplyRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class BoardService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
+    private final ReplyRepository replyRepository;
 
     // CREATE : 게시글 생성하기.
     @Transactional // 게시판 생성
@@ -46,11 +48,18 @@ public class BoardService {
         List<BoardResponseDto> boardDtoRead = new ArrayList<>();
 
         for (Board board : readBoard) {
+            List<Reply> replies = board.getReplies();
+            List<ReplyResponseDto> replyResponseDtos = replies.stream()
+                    .map(reply -> new ReplyResponseDto(reply.getReplyId(), reply.getContent(), reply.getContent()))
+                    .toList();
+
             BoardResponseDto boardDto = BoardResponseDto.builder()
                     .boardId(board.getBoardId())
                     .title(board.getTitle())
                     .contents(board.getContents())
                     .writer(board.getWriter())
+                    .replies(replyResponseDtos)
+                    .theNumberOfReply((long) replies.size())
                     .build();
 
             boardDtoRead.add(boardDto);
@@ -115,6 +124,7 @@ public class BoardService {
                     .title(board.getTitle())
                     .contents(board.getContents())
                     .replies(replyResponseDtos)
+                    .theNumberOfReply((long)replyResponseDtos.size())
                     .build();
             return boardResponseDto;
         }

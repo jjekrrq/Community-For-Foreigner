@@ -39,6 +39,7 @@ public class BoardController {
         Long userId = member.getId();
         boardService.createBoard(boardRequestDto, userId);
         return new ResponseEntity<>("글 작성", HttpStatus.OK);
+//        return ResponseEntity.ok("redirect:/board/details/" + boardRequestDto.getBoardId());
     }
     // READ : 전체 불러오기. / 구현 완료.
     @GetMapping("/read")
