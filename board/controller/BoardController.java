@@ -2,12 +2,16 @@ package com.example.project.board.controller;
 
 import com.example.project.board.dto.BoardRequestDto;
 import com.example.project.board.dto.BoardResponseDto;
+import com.example.project.board.dto.PageDto;
 import com.example.project.board.service.BoardService;
 import com.example.project.member.domain.Member;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -15,6 +19,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -45,6 +50,14 @@ public class BoardController {
     @GetMapping("/read")
     public ResponseEntity<List<BoardResponseDto>> readBoard(){
         return new ResponseEntity<>(boardService.readBoard(), HttpStatus.OK);
+    }
+    // READ : 전체 불러오기. / 페이징 처리
+    // 페이지 시작은 0부터 시작함. 배열이라 보면 쉬움. ex) 1번 페이지 -> page = 0
+    @GetMapping("/read/paging")
+    public ResponseEntity<PageDto<BoardResponseDto>> readBoardWithPaging(@RequestParam(defaultValue = "6") int page, @RequestParam(defaultValue = "3") int size, Model model){
+        Sort sort = Sort.by(Sort.Direction.DESC, "boardId");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return new ResponseEntity<>(boardService.readAllBoardWithPaging(pageable), HttpStatus.OK);
     }
     // READ : 유저 ID로 특정(유저 ID에 해당하는) 게시글 불러오기 / 구현 완료.
     @GetMapping("/read/{userId}")
