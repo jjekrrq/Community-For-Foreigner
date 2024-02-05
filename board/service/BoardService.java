@@ -167,7 +167,7 @@ public class BoardService {
 
             // 댓글 목록을 Dto로 변환.
             List<ReplyResponseDto> replyResponseDtos = replies.stream()
-                    .map(reply -> new ReplyResponseDto(reply.getReplyId(), reply.getContent(), reply.getContent()))
+                    .map(reply -> new ReplyResponseDto(reply.getReplyId(), reply.getContent(), reply.getWriter()))
                     .collect(Collectors.toList());
             // BoardResponseDto 생성.
             BoardResponseDto boardResponseDto = BoardResponseDto.builder()
