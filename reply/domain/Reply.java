@@ -3,6 +3,7 @@ package com.example.project.reply.domain;
 import com.example.project.board.domain.Board;
 import com.example.project.member.domain.Member;
 import com.example.project.reply.dto.ReplyRequestDto;
+import com.example.project.time.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class Reply { // 이승창
+public class Reply extends BaseTimeEntity { // 이승창
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "REPLY_ID")

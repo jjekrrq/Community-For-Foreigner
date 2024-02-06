@@ -3,6 +3,7 @@ package com.example.project.board.domain;
 import com.example.project.board.dto.BoardRequestDto;
 import com.example.project.member.domain.Member;
 import com.example.project.reply.domain.Reply;
+import com.example.project.time.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -17,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class Board {
+public class Board extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
