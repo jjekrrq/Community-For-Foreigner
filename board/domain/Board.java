@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +49,6 @@ public class Board extends BaseTimeEntity {
     @JsonIgnore
     @OrderBy("replyId desc ") // 댓글 작성시 최근 순으로
     private List<Reply> replies = new ArrayList<>();
-
 
 
     public void update(BoardRequestDto boardRequestDto) {

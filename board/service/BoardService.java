@@ -100,6 +100,7 @@ public class BoardService {
                                 .contents(board.getContents())
                                 .replies(replyResponseDtos)
                                 .theNumberOfReply((long) replies.size())
+                                .createdDate(board.getCreatedDate())
                                 .build();
                     })
                     .toList();

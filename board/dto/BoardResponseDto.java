@@ -7,6 +7,7 @@ import com.example.project.reply.domain.Reply;
 import com.example.project.reply.dto.ReplyResponseDto;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Setter
@@ -21,8 +22,7 @@ public class BoardResponseDto { // 게시글을 클릭했을 때, 댓글들도 �
     private String writer;
     private List<ReplyResponseDto> replies;
     private Long theNumberOfReply;
-
-
+    private LocalDateTime createdDate;
 
 
     // Board 객체를 BoardResponseDto 객체로 변환
