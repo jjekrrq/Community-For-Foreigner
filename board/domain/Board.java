@@ -16,6 +16,7 @@ import java.util.List;
 
 @Entity// 기본 생성자
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -36,6 +37,10 @@ public class Board extends BaseTimeEntity {
     // 내용
     @Column(name = "BOARD_CONTENT", columnDefinition = "TEXT", nullable = false)
     private String contents;
+
+    // 조회수
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private int view;
 
     // 게시글을 작성하려면 작성자가 필요함. 작성자는 로그인 되어있는 계정.
     @ManyToOne(fetch = FetchType.LAZY)

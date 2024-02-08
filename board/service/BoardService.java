@@ -101,6 +101,7 @@ public class BoardService {
                                 .replies(replyResponseDtos)
                                 .theNumberOfReply((long) replies.size())
                                 .createdDate(board.getCreatedDate())
+                                .view((long)board.getView())
                                 .build();
                     })
                     .toList();
@@ -163,6 +164,8 @@ public class BoardService {
         if(board != null) {
             // 게시글과 연관된 댓글 목록 가져오기.
             List<Reply> replies = board.getReplies();
+            // 조회수를 1씩 증가하게 만듦.
+            board.setView(board.getView() + 1);
 
             // 게시글과 연관된 댓글 목록을 조회하려면 트랜잭션 내에서 미리 조회하거나 Fetch 전략을 수정해야 함.
 
@@ -178,6 +181,7 @@ public class BoardService {
                     .contents(board.getContents())
                     .replies(replyResponseDtos)
                     .theNumberOfReply((long)replyResponseDtos.size())
+                    .view((long)board.getView())
                     .build();
             return boardResponseDto;
         }

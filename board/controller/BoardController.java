@@ -65,7 +65,7 @@ public class BoardController {
     @Parameter(name = "size", description = "한 페이지 안에 들어갈 수 있는 게시글 수")
     @Parameter(name = "model", description = "서버에서 클라이언트로 데이터를 전달해주는 객체인데 사용X")
     @GetMapping("/read/paging")
-    public ResponseEntity<PageDto<BoardResponseDto>> readBoardWithPaging(@RequestParam(defaultValue = "6") int page, @RequestParam(defaultValue = "3") int size, Model model){
+    public ResponseEntity<PageDto<BoardResponseDto>> readBoardWithPaging(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size, Model model){
         Sort sort = Sort.by(Sort.Direction.DESC, "boardId");
         Pageable pageable = PageRequest.of(page, size, sort);
         return new ResponseEntity<>(boardService.readAllBoardWithPaging(pageable), HttpStatus.OK);
