@@ -5,11 +5,9 @@ import com.example.project.member.domain.Member;
 import com.example.project.reply.domain.Reply;
 import com.example.project.time.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +53,10 @@ public class Board extends BaseTimeEntity {
     @OrderBy("replyId desc ") // 댓글 작성시 최근 순으로
     private List<Reply> replies = new ArrayList<>();
 
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.REMOVE)
+    @Column(name = "BOARD_LIKE")
+    @JsonIgnore
+    private List<Hearts> hearts = new ArrayList<>();
 
     public void update(BoardRequestDto boardRequestDto) {
         if(boardRequestDto.getTitle() == null){

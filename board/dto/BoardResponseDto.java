@@ -24,7 +24,7 @@ public class BoardResponseDto { // 게시글을 클릭했을 때, 댓글들도 �
     private Long theNumberOfReply;
     private LocalDateTime createdDate;
     private Long view;
-
+    private Long hearts;
 
     // Board 객체를 BoardResponseDto 객체로 변환
     public static BoardResponseDto of(Board board){

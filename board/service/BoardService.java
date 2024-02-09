@@ -1,6 +1,7 @@
 package com.example.project.board.service;
 
 import com.example.project.board.domain.Board;
+import com.example.project.board.domain.Hearts;
 import com.example.project.board.dto.BoardRequestDto;
 import com.example.project.board.dto.BoardResponseDto;
 import com.example.project.board.dto.PageDto;
@@ -164,6 +165,7 @@ public class BoardService {
         if(board != null) {
             // 게시글과 연관된 댓글 목록 가져오기.
             List<Reply> replies = board.getReplies();
+            List<Hearts> hearts = board.getHearts();
             // 조회수를 1씩 증가하게 만듦.
             board.setView(board.getView() + 1);
 
@@ -173,6 +175,7 @@ public class BoardService {
             List<ReplyResponseDto> replyResponseDtos = replies.stream()
                     .map(reply -> new ReplyResponseDto(reply.getReplyId(), reply.getContent(), reply.getWriter()))
                     .collect(Collectors.toList());
+            Long heartsCount = hearts.stream().count();
             // BoardResponseDto 생성.
             BoardResponseDto boardResponseDto = BoardResponseDto.builder()
                     .boardId(board.getBoardId())
@@ -182,6 +185,7 @@ public class BoardService {
                     .replies(replyResponseDtos)
                     .theNumberOfReply((long)replyResponseDtos.size())
                     .view((long)board.getView())
+                    .hearts(heartsCount)
                     .build();
             return boardResponseDto;
         }
