@@ -103,6 +103,7 @@ public class BoardService {
                                 .theNumberOfReply((long) replies.size())
                                 .createdDate(board.getCreatedDate())
                                 .view((long)board.getView())
+                                .hearts(board.getHearts().stream().count())
                                 .build();
                     })
                     .toList();
