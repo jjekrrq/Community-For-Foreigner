@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
@@ -19,7 +20,7 @@ public class Hearts {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY) // 하나의 게시글을 여러개의 좋아요를 가질 수 있으므로 1:다 매핑
-    @JoinColumn(name = "BOARD_ID", nullable = false)
+    @JoinColumn(name = "BOARD_ID")
     private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY) // 하나의 맴버는 여러개의 좋아요를 가질 수 있으므로 1:다 매핑

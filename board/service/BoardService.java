@@ -186,6 +186,7 @@ public class BoardService {
                     .theNumberOfReply((long)replyResponseDtos.size())
                     .view((long)board.getView())
                     .hearts(heartsCount)
+                    .createdDate(board.getCreatedDate())
                     .build();
             return boardResponseDto;
         }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class HeartsController {
     private final HeartsService heartsService;
 
+    // CREATE : 좋아요 누르기
     @PostMapping("/{boardId}")
     public ResponseEntity<String> addHearts(@AuthenticationPrincipal Member member, @PathVariable Long boardId){
         boolean result = false;
@@ -22,11 +23,20 @@ public class HeartsController {
             result = heartsService.addHearts(member, boardId);
         }
         return result ?
-                new ResponseEntity<>(HttpStatus.OK)
-                :new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                new ResponseEntity<>("좋아요 추가", HttpStatus.OK)
+                :new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
     }
+
+    // DELETE : 좋아요 삭제하기
     @DeleteMapping("/{boardId}")
     public ResponseEntity<String> deleteHearts(@AuthenticationPrincipal Member member, @PathVariable Long boardId){
+        boolean result = false;
 
+        if(member != null){
+            result = heartsService.deleteHearts(member, boardId);
+        }
+        return result ?
+                new ResponseEntity<>("좋아요 삭제", HttpStatus.OK)
+                :new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
     }
 }
