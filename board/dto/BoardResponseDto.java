@@ -2,11 +2,8 @@ package com.example.project.board.dto;
 
 
 import com.example.project.board.domain.Board;
-import com.example.project.member.domain.Member;
-import com.example.project.reply.domain.Reply;
 import com.example.project.reply.dto.ReplyResponseDto;
 import lombok.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,7 +32,4 @@ public class BoardResponseDto { // 게시글을 클릭했을 때, 댓글들도 �
                 .writer(board.getWriter())
                 .build();
     }
-
-
-
 }

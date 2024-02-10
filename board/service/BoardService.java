@@ -14,14 +14,8 @@ import com.example.project.reply.repository.ReplyRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -34,7 +28,7 @@ public class BoardService {
 
     // CREATE : 게시글 생성하기.
     @Transactional // 게시판 생성
-    public void createBoard(BoardRequestDto boardRequestDto, Long userId) {
+    public Long createBoard(BoardRequestDto boardRequestDto, Long userId) {
         Member member = memberRepository.findById(userId).orElseThrow(()
                 -> new IllegalArgumentException("존재하지 않는 사용자."));
 
@@ -46,6 +40,7 @@ public class BoardService {
                 .member(member)
                 .build();
         boardRepository.save(board);
+        return board.getBoardId();
     }
     // READ : 전체 게시글 조회
     @Transactional // 게시판 조회

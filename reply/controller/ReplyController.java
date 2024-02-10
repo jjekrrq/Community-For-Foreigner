@@ -4,18 +4,14 @@ import com.example.project.member.domain.Member;
 import com.example.project.reply.dto.ReplyRequestDto;
 import com.example.project.reply.dto.ReplyResponseDto;
 import com.example.project.reply.service.ReplyService;
-import com.google.firebase.auth.FirebaseToken;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Tag(name = "댓글 API", description = "Swagger 댓글 API")
@@ -43,7 +39,7 @@ public class ReplyController {
         String email = member.getEmail();
         replyService.writeReply(replyRequestDto, boardId, email);
 
-        // 게시글 상세 페이지
+        // 게시글 상세 페이지 : 댓글 작성하고 댓글이 작성된 게시글의 상세 페이지로 이동.
 //        return "redirect:/board/details/" + boardId;
 //        return new ResponseEntity<>("댓글 작성", HttpStatus.OK);
         return ResponseEntity.ok("redirect:/board/details/" + boardId);

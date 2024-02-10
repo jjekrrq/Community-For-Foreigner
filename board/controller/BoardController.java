@@ -5,8 +5,6 @@ import com.example.project.board.dto.BoardResponseDto;
 import com.example.project.board.dto.PageDto;
 import com.example.project.board.service.BoardService;
 import com.example.project.member.domain.Member;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.iid.FirebaseInstanceId;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,16 +14,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 import java.util.List;
 
 @Tag(name = "게시판 API", description = "Swagger 게시판 API")
@@ -48,9 +40,8 @@ public class BoardController {
     public ResponseEntity<String> createBoard(@RequestBody BoardRequestDto boardRequestDto, @AuthenticationPrincipal Member member){
 
         Long userId = member.getId();
-        boardService.createBoard(boardRequestDto, userId);
-        return new ResponseEntity<>("글 작성", HttpStatus.OK);
-//        return ResponseEntity.ok("redirect:/board/details/" + boardRequestDto.getBoardId());
+        Long createdBoardId = boardService.createBoard(boardRequestDto, userId);
+        return new ResponseEntity<>(createdBoardId+"번 글 작성", HttpStatus.OK);
     }
     // READ : 전체 불러오기. / 구현 완료.
     @Operation(summary = "전체 게시글 불러오기", description = "게시글 전체를 불러오기. 근데 페이징 처리 안됨.")
@@ -96,7 +87,7 @@ public class BoardController {
     @Operation(summary = "게시글 수정", description = "게시글 ID를 가지고 게시글을 수정하는 API")
     @Parameter(name = "boardId", description = "게시글의 고유 ID(PK)")
     @Parameter(name = "boardRequestDto", description = "수정할 내용을 담고 있는 변수 / 클라이언트에게 받는다.")
-    @PatchMapping("/update/{boardId}") // 자원을 전체 교체하는 PutMapping보다 PatchMappin이 더 좋을 것 같다.
+    @PatchMapping("/update/{boardId}") // 자원을 전체 교체하는 PutMapping보다 PatchMapping이 더 좋을 것 같다.
     public ResponseEntity<BoardResponseDto> updateBoard(@PathVariable("boardId") Long boardId,
                                                         @RequestBody BoardRequestDto boardRequestDto){
         BoardResponseDto updatedBoard = boardService.updateBoard(boardId, boardRequestDto);
