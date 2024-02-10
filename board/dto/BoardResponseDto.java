@@ -6,6 +6,7 @@ import com.example.project.reply.dto.ReplyResponseDto;
 import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Setter
 @Getter
@@ -30,6 +31,17 @@ public class BoardResponseDto { // 게시글을 클릭했을 때, 댓글들도 �
                 .title(board.getTitle())
                 .contents(board.getContents())
                 .writer(board.getWriter())
+                .replies(board.getReplies().stream()
+                        .map(reply -> new ReplyResponseDto(reply.getReplyId(), reply.getWriter(), reply.getContent()))
+                        .collect(Collectors.toList())
+                )
+                .theNumberOfReply(board.getReplies().stream()
+                        .map(reply -> new ReplyResponseDto(reply.getReplyId(), reply.getWriter(), reply.getWriter()))
+                        .count()
+                )
+                .createdDate(board.getCreatedDate())
+                .view((long)board.getView())
+                .hearts((long) board.getHearts().size())
                 .build();
     }
 }

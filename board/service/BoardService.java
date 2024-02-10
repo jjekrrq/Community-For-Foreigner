@@ -171,7 +171,7 @@ public class BoardService {
             List<ReplyResponseDto> replyResponseDtos = replies.stream()
                     .map(reply -> new ReplyResponseDto(reply.getReplyId(), reply.getContent(), reply.getWriter()))
                     .collect(Collectors.toList());
-            Long heartsCount = hearts.stream().count();
+            Long heartsCount = (long)hearts.size();
             // BoardResponseDto 생성.
             BoardResponseDto boardResponseDto = BoardResponseDto.builder()
                     .boardId(board.getBoardId())
