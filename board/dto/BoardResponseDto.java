@@ -18,6 +18,7 @@ public class BoardResponseDto { // 게시글을 클릭했을 때, 댓글들도 �
     private String title;
     private String contents;
     private String writer;
+    private String region;
     private List<ReplyResponseDto> replies;
     private Long theNumberOfReply;
     private LocalDateTime createdDate;

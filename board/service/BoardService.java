@@ -37,6 +37,7 @@ public class BoardService {
                 .writer(member.getName()) // 현재 로그인 되어 있는 유저의 이름 저장.
                 .title(boardRequestDto.getTitle())
                 .contents(boardRequestDto.getContents())
+                .region(boardRequestDto.getRegion())
                 .member(member)
                 .build();
         boardRepository.save(board);
@@ -59,6 +60,7 @@ public class BoardService {
                     .title(board.getTitle())
                     .contents(board.getContents())
                     .writer(board.getWriter())
+                    .region(board.getRegion())
                     .replies(replyResponseDtos)
                     .theNumberOfReply((long) replies.size())
                     .build();
@@ -94,6 +96,7 @@ public class BoardService {
                                 .title(board.getTitle())
                                 .writer(board.getWriter())
                                 .contents(board.getContents())
+                                .region(board.getRegion())
                                 .replies(replyResponseDtos)
                                 .theNumberOfReply((long) replies.size())
                                 .createdDate(board.getCreatedDate())
@@ -178,6 +181,7 @@ public class BoardService {
                     .writer(board.getWriter())
                     .title(board.getTitle())
                     .contents(board.getContents())
+                    .region(board.getRegion())
                     .replies(replyResponseDtos)
                     .theNumberOfReply((long)replyResponseDtos.size())
                     .view((long)board.getView())

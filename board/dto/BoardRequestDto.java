@@ -10,4 +10,5 @@ public class BoardRequestDto {
     private Long boardId;
     private String contents;
     private String title;
+    private String region;
 }

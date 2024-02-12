@@ -40,6 +40,9 @@ public class Board extends BaseTimeEntity {
     @Column(columnDefinition = "integer default 0", nullable = false)
     private int view;
 
+    // 지역
+    private String region;
+
     // 게시글을 작성하려면 작성자가 필요함. 작성자는 로그인 되어있는 계정.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
