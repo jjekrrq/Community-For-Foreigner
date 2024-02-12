@@ -120,6 +120,26 @@ public class BoardService {
         // 총 게시글 개수 / 한 페이지안에 들어갈 수 있는 게시글 개수 = 총 페이지 개수
         return (int) Math.ceil((double) totalNumberOfBoards / pageSize);
     }
+    @Transactional
+    public List<BoardResponseDto> getRelatedBoard(String gottenWords){
+        List<BoardResponseDto> boardResponseDtos = boardRepository.findAll().stream()
+                .filter(board -> {String titleWords = board.getTitle();
+                return titleWords != null && titleWords.contains(gottenWords);})
+                .map(board -> BoardResponseDto.builder()
+                        .boardId(board.getBoardId())
+                        .title(board.getTitle())
+                        .contents(board.getContents())
+                        .writer(board.getWriter())
+                        .region(board.getRegion())
+                        .replies(board.getReplies().stream().map(reply -> new ReplyResponseDto(reply.getReplyId(), reply.getWriter(), reply.getContent())).collect(Collectors.toList()))
+                        .hearts((long)board.getHearts().size())
+                        .createdDate(board.getCreatedDate())
+                        .view((long)board.getView())
+                        .theNumberOfReply((long)board.getReplies().size())
+                        .build())
+                .toList();
+        return boardResponseDtos;
+    }
     // READ : 유저 ID로 게시글 찾기 / 수정해야 함
     @Transactional
     public List<BoardResponseDto> getOneBoard(Long userId){

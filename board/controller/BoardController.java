@@ -8,6 +8,7 @@ import com.example.project.member.domain.Member;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -75,6 +76,11 @@ public class BoardController {
     @GetMapping("/writer/{boardwriter}")
     public ResponseEntity<List<BoardResponseDto>> getBoardsThroughBoardWriter(@PathVariable("boardwriter") String boardWriter){
         return new ResponseEntity<>(boardService.getBoardsThroughWriter(boardWriter), HttpStatus.OK);
+    }
+    // READ : 게시글 제목으로 연관 검색
+    @GetMapping("related/{relatedWords}")
+    public ResponseEntity<List<BoardResponseDto>> getRelatedBoards(@PathVariable("relatedWords") String relatedWords){
+        return new ResponseEntity<>(boardService.getRelatedBoard(relatedWords), HttpStatus.OK);
     }
     // READ : 상세 게시물 / 댓글도
     @Operation(summary = "게시글 상세 조회", description = "게시글 고유 ID를 가지고 해당 게시글을 상세 조회하는 API")
