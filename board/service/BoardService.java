@@ -120,11 +120,13 @@ public class BoardService {
         // 총 게시글 개수 / 한 페이지안에 들어갈 수 있는 게시글 개수 = 총 페이지 개수
         return (int) Math.ceil((double) totalNumberOfBoards / pageSize);
     }
+    // READ : 게시글 제목으로 연관 검색하기.
     @Transactional
     public List<BoardResponseDto> getRelatedBoard(String gottenWords){
         List<BoardResponseDto> boardResponseDtos = boardRepository.findAll().stream()
                 .filter(board -> {String titleWords = board.getTitle();
-                return titleWords != null && titleWords.contains(gottenWords);})
+                                  String contentsWords = board.getContents();
+                return (titleWords != null && titleWords.contains(gottenWords)) || (contentsWords != null && contentsWords.contains(gottenWords));})
                 .map(board -> BoardResponseDto.builder()
                         .boardId(board.getBoardId())
                         .title(board.getTitle())
