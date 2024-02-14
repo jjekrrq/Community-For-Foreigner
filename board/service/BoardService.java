@@ -159,7 +159,7 @@ public class BoardService {
 
         return boardResponseDtos;
     }
-    // READ : 작성자 이름으로 게시글 조회하기 / 수정해야 함
+    // READ : 작성자 이름으로 게시글 조회하기
     @Transactional
     public List<BoardResponseDto> getBoardsThroughWriter(String writer){
         List<BoardResponseDto> boardResponseDtos = boardRepository.findAll().stream()
@@ -169,11 +169,17 @@ public class BoardService {
                         .writer(board.getWriter())
                         .title(board.getTitle())
                         .contents(board.getContents())
+                        .region(board.getRegion())
+                        .createdDate(board.getCreatedDate())
+                        .view((long)board.getView())
+                        .replies(board.getReplies().stream().map(reply -> new ReplyResponseDto(reply.getReplyId(), reply.getWriter(), reply.getContent())).collect(Collectors.toList()))
+                        .theNumberOfReply((long)board.getReplies().size())
+                        .hearts((long)board.getHearts().size())
                         .build())
                 .collect(Collectors.toList());
         return boardResponseDtos;
     }
-    // READ : 게시판 ID로 게시글 조회하기 / 상세 조회(댓글까지 나오게)
+    // READ : 게시판 ID로 게시글 조회하기 / 상세 조회(댓글까지 나오게) / 상세 조회할 때, 조회수 1 증가.
     @Transactional
     public BoardResponseDto getBoardThroughBoardId(Long boardId){
         // boardId를 가지고 게시글을 조회함.
